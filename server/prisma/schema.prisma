@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id           String       @id @default(uuid())
+  name         String
+  age          String
+  phone        String
+  email        String       @unique
+  password     String
+  profilePhoto String?
+  status       UserStatus   @default(PENDING)
+  plan         Plans        @default(FREE)
+  role         UserRole?    @default(USER)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  profile      UserProfile?
+
+  userdashboardCount UserDashboardCount?
+  Payment            Payment[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  id            String         @id @default(uuid())
+  userId        String         @unique
+  weight        Int
+  height        Int
+  maritalStatus MaritalStatus?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("user_profiles")
+}
+
+model Trainers {
+  id                String   @id @default(uuid())
+  name              String
+  title             String
+  bio               String
+  image             String
+  totalExperience   Int
+  traineesCount     Int
+  totalEarnedAmount Int
+  rating            Int
+  availabilityDays  String[]
+  availabilityTimes String[]
+  tags              String[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  comments  Comment[]
+
+  @@map("trainers")
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  userId        String
+  plan          String?
+  schedule      String?
+  amount        Int?
+  transactionId String?       @unique
+  status        PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("payments")
+}
+
+model MembershipPlans {
+  id        String   @id @default(uuid())
+  plans     Plans    @default(FREE)
+  caption   String
+  amount    Int
+  duration  String
+  benefits  String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("membership_plans")
+}
+
+model UserDashboardCount {
+  id        String   @id @default(uuid())
+  steps     Int
+  calories  Int
+  progress  Int
+  sleep     Int
+  gym       Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("user_dashboard_count")
+}
+
+model Comment {
+  id          String   @id @default(uuid())
+  content     String
+  commentorId String
+  comment     Trainers @relation(fields: [commentorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model Blog {
+  id                String   @id @default(uuid())
+  authorName        String
+  authorImg         String
+  mainTitle         String
+  secondTitle       String
+  firstDescription  String
+  secondDescription String
+  time              String
+  quote             String
+  blogImg           String
+  tags              String[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("blogs")
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Plans {
+  FREE
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum MaritalStatus {
+  MARRIED
+  UNMARRIED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  PAID
+}
