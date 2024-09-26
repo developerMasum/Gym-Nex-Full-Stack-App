@@ -45,7 +45,7 @@ const LineChart = () => {
     plugins: {
       legend: {
         display: true,
-        position: "top",
+        position: "top" as const, // Ensure correct type is provided
       },
       tooltip: {
         enabled: true,

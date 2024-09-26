@@ -34,7 +34,7 @@ const PieChart = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top", // Position of the legend
+        position: "top" as const,
       },
       tooltip: {
         enabled: true,

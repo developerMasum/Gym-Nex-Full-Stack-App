@@ -25,7 +25,7 @@ const NewsPage = () => {
     <div>
       <BlogBanner />
       <div className="w-full max-w-7xl mx-auto flex flex-col justify-center items-center gap-6 p-4">
-        {blogs?.map((blog) => (
+        {blogs?.map((blog: any) => (
           <Link key={blog.id} href={`/news/${blog.id}`} className="w-full">
             <div
               className="bg-[#0A0A17] border border-gray-700 rounded-lg flex items-center p-4 hover:shadow-lg transition-shadow duration-300"
