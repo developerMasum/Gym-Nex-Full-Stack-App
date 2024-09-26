@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useGetMonthWiseUserUpdateQuery } from "@/redux/api/dashboardApi";
 
 // Register the components
 ChartJS.register(
@@ -24,13 +25,22 @@ ChartJS.register(
 );
 
 const LineChart = () => {
-  // Sample data (you can replace it with any dynamic data)
+  const { data: userData, isLoading } = useGetMonthWiseUserUpdateQuery({});
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  // Mapping the userData to chart data
+  const labels = userData.map((monthData: any) => monthData.name); // Extract month names for labels
+  const totals = userData.map((monthData: any) => monthData.total); // Extract totals for data
+
   const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    labels, // Use the month names as labels
     datasets: [
       {
-        label: "Sales",
-        data: [20, 50, 45, 60, 30, 50, 80], // Replace with your data
+        label: "Monthly User Updates",
+        data: totals, // Use the totals for the data points
         borderColor: "green",
         backgroundColor: "transparent",
         pointBorderColor: "green",
@@ -54,14 +64,14 @@ const LineChart = () => {
     scales: {
       y: {
         beginAtZero: true,
-        max: 100,
+        max: Math.max(...totals) + 5, // Dynamically adjust the y-axis max value
       },
     },
   };
 
   return (
     <div>
-      <h2>Basic Line Chart</h2>
+      <h2>Monthly User Updates</h2>
       <Line data={data} options={options} />
     </div>
   );

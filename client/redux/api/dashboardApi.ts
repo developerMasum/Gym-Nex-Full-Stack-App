@@ -12,23 +12,23 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.admin],
     }),
-    getMonthlyData: build.query({
+    getMonthWisePaymentUpdate: build.query({
       query: () => ({
-        url: "/dashboard/count-monthly",
+        url: "/payment-count",
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
     }),
-    getMeritWiseDonner: build.query({
+    getMonthWiseUserUpdate: build.query({
       query: () => ({
-        url: "/dashboard/donor-merit-wise",
+        url: "/dashboard/user-count",
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
     }),
-    getBestDonnersWithTimeOfDonations: build.query({
+    getYearlyIncome: build.query({
       query: () => ({
-        url: "/dashboard/donations-time",
+        url: "/yearly-income",
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
@@ -45,8 +45,9 @@ export const dashboardApi = baseApi.injectEndpoints({
 
 export const {
   useGetDashboardDataQuery,
-  useGetMonthlyDataQuery,
-  useGetMeritWiseDonnerQuery,
-  useGetBestDonnersWithTimeOfDonationsQuery,
+  useGetMonthWisePaymentUpdateQuery,
+  useGetMonthWiseUserUpdateQuery,
+  useGetYearlyIncomeQuery,
+
   useGestBestDonnersQuery,
 } = dashboardApi;
