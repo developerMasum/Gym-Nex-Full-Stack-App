@@ -26,7 +26,7 @@ const PaymentBarChart: React.FC = () => {
   const { data: paymentData, isLoading } = useGetMonthWisePaymentUpdateQuery(
     {}
   );
-  console.log(paymentData);
+  // console.log(paymentData);
   if (isLoading) {
     return <Loading />;
   }
