@@ -9,6 +9,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useGetMonthWisePaymentUpdateQuery } from "@/redux/api/dashboardApi";
+import Loading from "@/components/Common/Loading";
 
 // Register chart.js components
 ChartJS.register(
@@ -21,16 +23,22 @@ ChartJS.register(
 );
 
 const PaymentBarChart: React.FC = () => {
-  // Sample labels and data
-  const labels = ["January", "February", "March", "April", "May"];
-  const paymentData = [1500, 2000, 1800, 2200, 2400];
+  const { data: paymentData, isLoading } = useGetMonthWisePaymentUpdateQuery(
+    {}
+  );
+  console.log(paymentData);
+  if (isLoading) {
+    return <Loading />;
+  }
+  const labels = paymentData.map((item: any) => item.name); // Month names for x-axis
+  const dataValues = paymentData.map((item: any) => item.total);
 
   const data = {
     labels: labels,
     datasets: [
       {
         label: "Payments",
-        data: paymentData,
+        data: dataValues,
         backgroundColor: "rgba(75, 192, 192, 0.5)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,

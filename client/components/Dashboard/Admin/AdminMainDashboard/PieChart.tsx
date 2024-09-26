@@ -1,29 +1,47 @@
+"use client";
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useGetYearlyIncomeQuery } from "@/redux/api/dashboardApi";
+import Loading from "@/components/Common/Loading";
 
 // Register the required components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = () => {
-  // Sample revenue data for different years
+  const { data: yearlyIncome, isLoading } = useGetYearlyIncomeQuery({});
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  console.log("yearlyIncome", yearlyIncome);
+
+  // Extract the year labels and income data for the Pie chart
+  const labels = yearlyIncome.map((item: any) => item.year); // Extract years
+  const dataValues = yearlyIncome.map((item: any) => item.totalIncome); // Extract totalIncome values
+
   const data = {
-    labels: ["2020", "2021", "2022", "2023"], // Years
+    labels: labels, // Use extracted years as labels
     datasets: [
       {
         label: "Yearly Revenue",
-        data: [50000, 75000, 100000, 85000], // Revenue data
+        data: dataValues, // Use extracted totalIncome as data
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)", // Colors for each slice
+          "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
           "rgba(255, 206, 86, 0.2)",
           "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
           "rgba(54, 162, 235, 1)",
           "rgba(255, 206, 86, 1)",
           "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
         ],
         borderWidth: 1,
       },

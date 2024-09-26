@@ -121,25 +121,31 @@ const getMonthWiseUserUpdate = async () => {
   return monthWiseUpdate;
 };
 
-const getYearlyIncome = async () => {
+const getYearlyIncome = async (pastYearsCount = 5) => {
   const currentYear = new Date().getFullYear();
-  const total = await prisma.payment.aggregate({
-    _sum: {
-      amount: true,
-    },
-    where: {
-      status: "PAID",
-      updatedAt: {
-        gte: new Date(currentYear, 0, 1), // First day of the year
-        lt: new Date(currentYear + 1, 0, 1), // First day of the next year
-      },
-    },
-  });
+  const yearlyIncome = [];
 
-  return {
-    year: currentYear,
-    totalIncome: total._sum.amount || 0, // Default to 0 if no payments
-  };
+  for (let year = currentYear; year >= currentYear - pastYearsCount; year--) {
+    const total = await prisma.payment.aggregate({
+      _sum: {
+        amount: true,
+      },
+      where: {
+        status: "PAID",
+        updatedAt: {
+          gte: new Date(year, 0, 1), // First day of the current year
+          lt: new Date(year + 1, 0, 1), // First day of the next year
+        },
+      },
+    });
+
+    yearlyIncome.push({
+      year,
+      totalIncome: total._sum.amount || 0, // Default to 0 if no payments
+    });
+  }
+
+  return yearlyIncome;
 };
 
 export const DashboardService = {

@@ -14,7 +14,7 @@ export const dashboardApi = baseApi.injectEndpoints({
     }),
     getMonthWisePaymentUpdate: build.query({
       query: () => ({
-        url: "/payment-count",
+        url: "/dashboard/payment-count",
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
@@ -28,7 +28,7 @@ export const dashboardApi = baseApi.injectEndpoints({
     }),
     getYearlyIncome: build.query({
       query: () => ({
-        url: "/yearly-income",
+        url: "/dashboard/yearly-income",
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
