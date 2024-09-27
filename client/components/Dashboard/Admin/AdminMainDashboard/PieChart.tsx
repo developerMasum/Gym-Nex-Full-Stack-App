@@ -15,8 +15,6 @@ const PieChart = () => {
     return <Loading />;
   }
 
-  console.log("yearlyIncome", yearlyIncome);
-
   // Extract the year labels and income data for the Pie chart
   const labels = yearlyIncome.map((item: any) => item.year); // Extract years
   const dataValues = yearlyIncome.map((item: any) => item.totalIncome); // Extract totalIncome values
@@ -53,16 +51,23 @@ const PieChart = () => {
     plugins: {
       legend: {
         position: "top" as const,
+        labels: {
+          color: "white", // Make legend text white
+        },
       },
       tooltip: {
         enabled: true,
+        titleColor: "white", // Tooltip title in white
+        bodyColor: "white", // Tooltip body text in white
       },
     },
   };
 
   return (
-    <div className="p-8 w-[450px]">
-      <h2>Yearly Revenue Pie Chart</h2>
+    <div className="p-4 md:p-8 w-full md:w-[450px] mx-auto shadow-sm">
+      <h2 className="text-xl font-bold text-white text-center mb-4">
+        Yearly Revenue Pie Chart
+      </h2>
       <Pie data={data} options={options} />
     </div>
   );

@@ -43,8 +43,8 @@ export const drawerItems = (role: UserRole): ISidebarItem[] => {
           icon: Users,
         },
         {
-          title: "Events",
-          path: `${role}/events`,
+          title: "Equipments",
+          path: `${role}/equipments`,
           icon: UserCog,
         }
       );

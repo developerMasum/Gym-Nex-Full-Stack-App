@@ -28,7 +28,7 @@ const LineChart = () => {
   const { data: userData, isLoading } = useGetMonthWiseUserUpdateQuery({});
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="text-white">Loading...</p>;
   }
 
   // Mapping the userData to chart data
@@ -40,12 +40,12 @@ const LineChart = () => {
     datasets: [
       {
         label: "Monthly User Updates",
-        data: totals, // Use the totals for the data points
+        data: totals,
         borderColor: "green",
         backgroundColor: "transparent",
         pointBorderColor: "green",
         pointBackgroundColor: "green",
-        tension: 0.4, // To give the curved lines
+        tension: 0.4,
       },
     ],
   };
@@ -55,23 +55,45 @@ const LineChart = () => {
     plugins: {
       legend: {
         display: true,
-        position: "top" as const, // Ensure correct type is provided
+        position: "top" as const,
+        labels: {
+          color: "white", // Make legend text white
+        },
       },
       tooltip: {
         enabled: true,
+        titleColor: "white", // Tooltip title in white
+        bodyColor: "white", // Tooltip body text in white
       },
     },
     scales: {
+      x: {
+        ticks: {
+          color: "white", // X-axis labels in white
+        },
+        grid: {
+          display: false, // Optionally remove grid lines
+        },
+      },
       y: {
+        ticks: {
+          color: "white", // Y-axis labels in white
+        },
+        grid: {
+          display: true,
+          color: "rgba(255, 255, 255, 0.2)", // Lighter grid line color for better readability
+        },
         beginAtZero: true,
-        max: Math.max(...totals) + 5, // Dynamically adjust the y-axis max value
+        max: Math.max(...totals) + 5, // Adjust Y-axis max dynamically
       },
     },
   };
 
   return (
-    <div>
-      <h2>Monthly User Updates</h2>
+    <div className="shadow-sm p-2">
+      <h2 className="text-white text-xl font-bold mb-4 ">
+        Monthly User Updates
+      </h2>
       <Line data={data} options={options} />
     </div>
   );

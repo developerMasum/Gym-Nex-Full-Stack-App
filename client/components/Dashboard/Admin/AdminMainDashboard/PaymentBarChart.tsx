@@ -54,7 +54,8 @@ const PaymentBarChart: React.FC = () => {
           display: false, // Hide vertical grid lines
         },
         ticks: {
-          display: true, // Show x-axis (months) labels
+          display: true,
+          color: "white",
         },
       },
       y: {
@@ -73,6 +74,10 @@ const PaymentBarChart: React.FC = () => {
       title: {
         display: true,
         text: "Payment Data Over Time",
+        color: "white",
+        font: {
+          size: 16,
+        },
       },
     },
   };

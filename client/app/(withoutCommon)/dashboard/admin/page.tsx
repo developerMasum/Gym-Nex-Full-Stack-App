@@ -13,8 +13,10 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <LatestPaymentList />
         <PaymentBarChart />
+
         <LineChart />
         <PieChart />
+
         {/* <UserGrowthChart /> */}
       </div>
     </div>
