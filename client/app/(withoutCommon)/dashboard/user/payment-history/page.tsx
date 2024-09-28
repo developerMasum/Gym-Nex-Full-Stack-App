@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
   TableCaption,
-} from "@/components/ui/table"; // Importing necessary components from ShadCN UI
+} from "@/components/ui/table";
 import SearchInput from "@/components/Reuseable/SearchInput";
 import { useGetMyOfflinePaymentsHistoryQuery } from "@/redux/api/paymentApi";
 import { getUserInfo } from "@/services/actions/auth.services";
@@ -16,12 +16,12 @@ import React, { useState } from "react";
 interface Invoice {
   id: string;
   status: string;
-  method?: string; // Optional since it might not be present
+  method?: string;
   amount: number;
   plan: string;
   schedule: string;
   transactionId: string;
-  createdAt: string; // Adding createdAt for date and time
+  createdAt: string;
 }
 
 const PaymentHistory = () => {
@@ -64,8 +64,8 @@ const PaymentHistory = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredInvoices.length > 0 ? (
-              filteredInvoices.map((invoice: any, index: number) => (
+            {filteredInvoices?.length > 0 ? (
+              filteredInvoices?.map((invoice: any, index: number) => (
                 <TableRow key={index}>
                   <TableCell>
                     {new Date(invoice.createdAt).toLocaleDateString()}

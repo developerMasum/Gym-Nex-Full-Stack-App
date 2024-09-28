@@ -6,7 +6,7 @@ import { UserDashboardService } from "./userDashboard.service";
 
 const getUserDashboardCounts = catchAsync(
   async (req: Request, res: Response) => {
-    const result = await UserDashboardService.getUserDashboardCounts();
+    const result = await UserDashboardService.getUserDashboardCounts(req.body);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -29,51 +29,51 @@ const createUserDashboardCounts = catchAsync(
   }
 );
 
-const getCyclingData = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserDashboardService.getCyclingData();
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Cycling data retrieved successfully!",
-    data: result,
-  });
-});
+// const getCyclingData = catchAsync(async (req: Request, res: Response) => {
+//   const result = await UserDashboardService.getCyclingData();
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Cycling data retrieved successfully!",
+//     data: result,
+//   });
+// });
 
-const getGymData = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserDashboardService.getGymData();
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Gym data retrieved successfully!",
-    data: result,
-  });
-});
+// const getGymData = catchAsync(async (req: Request, res: Response) => {
+//   const result = await UserDashboardService.getGymData();
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Gym data retrieved successfully!",
+//     data: result,
+//   });
+// });
 
-const getFitnessData = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserDashboardService.getFitnessData();
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Fitness data retrieved successfully!",
-    data: result,
-  });
-});
+// const getFitnessData = catchAsync(async (req: Request, res: Response) => {
+//   const result = await UserDashboardService.getFitnessData();
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Fitness data retrieved successfully!",
+//     data: result,
+//   });
+// });
 
-const getWeightData = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserDashboardService.getWeightData();
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Weight data retrieved successfully!",
-    data: result,
-  });
-});
+// const getWeightData = catchAsync(async (req: Request, res: Response) => {
+//   const result = await UserDashboardService.getWeightData();
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Weight data retrieved successfully!",
+//     data: result,
+//   });
+// });
 
 export const UserDashboardController = {
   getUserDashboardCounts,
   createUserDashboardCounts,
-  getCyclingData,
-  getGymData,
-  getFitnessData,
-  getWeightData,
+  // getCyclingData,
+  // getGymData,
+  // getFitnessData,
+  // getWeightData,
 };

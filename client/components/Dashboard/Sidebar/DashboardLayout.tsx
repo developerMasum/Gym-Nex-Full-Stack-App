@@ -30,7 +30,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       setUserInfo(user); // Store user info in state
     }
   }, []);
-  console.log("userInfo", userInfo);
+  // console.log("userInfo", userInfo);
 
   const sidebarItems = drawerItems(userRole as UserRole);
   const router = useRouter();
@@ -69,7 +69,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       </button>
                     </p>
                   ) : (
-                    <button className="mt-1 text-xs lg:text-sm px-2 lg:px-2 lg:py-0 text-white font-semibold bg-red-700 hover:bg-red-800 rounded-md">
+                    <button
+                      disabled
+                      className="mt-1 text-xs lg:text-sm px-2 lg:px-2 lg:py-0 text-white font-semibold bg-red-700  rounded-md "
+                    >
                       {userInfo.plan || "No plan"} Plan
                     </button>
                   )}

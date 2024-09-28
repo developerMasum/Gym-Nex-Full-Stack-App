@@ -34,6 +34,7 @@ model UserProfile {
   userId        String         @unique
   weight        Int
   height        Int
+  photo         String
   maritalStatus MaritalStatus?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
