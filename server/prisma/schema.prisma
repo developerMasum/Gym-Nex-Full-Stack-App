@@ -21,7 +21,7 @@ model User {
   role         UserRole?    @default(USER)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  profile      UserProfile?
+  userProfile  UserProfile?
 
   userdashboardCount UserDashboardCount?
   Payment            Payment[]
@@ -30,15 +30,15 @@ model User {
 }
 
 model UserProfile {
-  id         String @id @default(uuid())
-  userId     String @unique
-  weight     Int
-  height     Int
-  location   String
-  about      String
-  occupation String
+  id         String  @id @default(uuid())
+  userId     String  @unique
+  weight     Int?
+  height     Int?
+  location   String?
+  about      String?
+  occupation String?
 
-  photo         String
+  photo         String?
   maritalStatus MaritalStatus?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

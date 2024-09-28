@@ -44,6 +44,13 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.admin, tagTypes.user],
     }),
+    getMyself: build.query({
+      query: () => ({
+        url: "/get-me",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
   }),
 });
 
@@ -54,4 +61,5 @@ export const {
   useUpdateUserMutation,
   useCreateUserMutation,
   useGetAllUserQuery,
+  useGetMyselfQuery,
 } = userApi;

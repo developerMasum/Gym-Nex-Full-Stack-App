@@ -9,20 +9,21 @@ import { Secret } from "jsonwebtoken";
 import prisma from "../../../shared/prisma";
 import { userSearchAbleFields } from "./user.constants";
 
-type CreateUserInput = {
-  name: string;
-  age: string;
-  phone: string;
-  email: string;
-  password: string;
-  profilePhoto?: string;
-};
+// type CreateUserInput = {
+//   name: string;
+//   age: string;
+//   phone: string;
+//   email: string;
+//   password: string;
+//   profilePhoto?: string;
+// };
 
-const createUserIntoDB = async (userData: CreateUserInput) => {
+const createUserIntoDB = async (userData: any) => {
   const hashedPassword: string = await bcrypt.hash(userData.password, 12);
 
   try {
     const result = await prisma.$transaction(async (tx) => {
+      // Create user first
       const createdUser = await tx.user.create({
         data: {
           name: userData.name,
@@ -34,10 +35,19 @@ const createUserIntoDB = async (userData: CreateUserInput) => {
         },
       });
 
+      // Create user profile associated with the user
+      const createdProfile = await tx.userProfile.create({
+        data: {
+          userId: createdUser.id,
+        },
+      });
+
       // Exclude password and role from the returned object
       const { password, role, ...userWithoutPasswordAndRole } = createdUser;
 
-      return { data: userWithoutPasswordAndRole };
+      return {
+        data: { user: userWithoutPasswordAndRole, profile: createdProfile },
+      };
     });
 
     return result;
@@ -154,19 +164,33 @@ const deleteTrainer = async (id: string) => {
   return result;
 };
 const getMyself = async (token: string) => {
-  const verifiedUser = jwtHelpers.verifyToken(
-    token,
-    config.jwt.jwt_secret as Secret
-  );
-  console.log(verifiedUser);
-  const userId = verifiedUser.id;
-  // console.log(id);
-  const result = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-  return result;
+  try {
+    // Verify the token and extract the user ID
+    const verifiedUser = jwtHelpers.verifyToken(
+      token,
+      config.jwt.jwt_secret as Secret
+    );
+    console.log("Verified User:", verifiedUser);
+
+    const userId = verifiedUser.id;
+    console.log("User ID:", userId);
+
+    // Fetch the user with profile included
+    const result = await prisma.user.findUniqueOrThrow({
+      where: {
+        id: userId,
+      },
+      include: {
+        userProfile: true,
+      },
+    });
+
+    console.log("Fetched user with profile:", result);
+    return result;
+  } catch (error) {
+    console.error("Error fetching user or profile:", error);
+    throw new Error("User or Profile not found");
+  }
 };
 
 export const userService = {
