@@ -4,6 +4,7 @@ import { AuthServices } from "./auth.service";
 import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 import { IRefreshTokenResponse } from "./auth.interface";
+import { config } from "dotenv";
 
 // const loginUser = catchAsync(async (req: Request, res: Response) => {
 //   const result = await AuthServices.loginUser(req.body);
@@ -26,9 +27,9 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 
   const { refreshToken } = result;
 
-  res.cookie('refreshToken', refreshToken, {
-      secure: false,
-      httpOnly: true
+  res.cookie("refreshToken", refreshToken, {
+    secure: false,
+    httpOnly: true,
   });
 
   sendResponse(res, {
@@ -65,7 +66,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 });
 
 const changePassword = catchAsync(async (req: Request, res: Response) => {
-    const authorization: string = req.headers.authorization || "";
+  const authorization: string = req.headers.authorization || "";
   const { ...passwordData } = req.body;
 
   await AuthServices.changePassword(authorization, passwordData);
@@ -84,5 +85,5 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
 export const AuthController = {
   loginUser,
   refreshToken,
-  changePassword
+  changePassword,
 };

@@ -1,3 +1,6 @@
+import { Secret } from "jsonwebtoken";
+import config from "../../../config";
+import { jwtHelpers } from "../../../Helpers/jwtHealpers";
 import prisma from "../../../shared/prisma";
 
 type MonthWiseUpdate = {
@@ -148,9 +151,34 @@ const getYearlyIncome = async (pastYearsCount = 5) => {
   return yearlyIncome;
 };
 
+const createUserProfileCounts = async (data: any) => {
+  const result = await prisma.userDashboardCount.create({
+    data,
+  });
+  return result;
+};
+const getSingleUserProfileCounts = async (token: string) => {
+  const verifiedUser = jwtHelpers.verifyToken(
+    token,
+    config.jwt.jwt_secret as Secret
+  );
+  console.log(verifiedUser);
+  const userId = verifiedUser.id;
+  // console.log(userId);
+
+  const result = await prisma.userDashboardCount.findUniqueOrThrow({
+    where: {
+      userId: userId,
+    },
+  });
+  return result;
+};
+
 export const DashboardService = {
   getDashboardCounts,
   getMonthWisePaymentUpdate,
   getMonthWiseUserUpdate,
   getYearlyIncome,
+  createUserProfileCounts,
+  getSingleUserProfileCounts,
 };

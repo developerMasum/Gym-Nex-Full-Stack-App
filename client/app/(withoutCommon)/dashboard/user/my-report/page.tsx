@@ -1,10 +1,12 @@
-import Report from "@/components/Dashboard/User/Report/Report";
-import React from "react";
+"use client";
+import Charts from "./Components/Charts";
+import ReportStats from "./Components/ReportBoxes";
 
 const ReportPage = () => {
   return (
     <>
-      <Report />
+      <ReportStats />
+      <Charts />
     </>
   );
 };

@@ -48,10 +48,37 @@ const getYearlyIncome = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const createUserProfileCounts = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await DashboardService.createUserProfileCounts(req.body);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "User Profile counts created successfully!",
+      data: result,
+    });
+  }
+);
+const getSingleUserProfileCounts = catchAsync(
+  async (req: Request, res: Response) => {
+    const authorization: string = req.headers.authorization || "";
+    const result = await DashboardService.getSingleUserProfileCounts(
+      authorization
+    );
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "User Profile counts retrieved successfully!",
+      data: result,
+    });
+  }
+);
 
 export const DashboardController = {
   getDashboardCounts,
   getMonthWisePaymentUpdate,
   getMonthWiseUserUpdate,
   getYearlyIncome,
+  createUserProfileCounts,
+  getSingleUserProfileCounts,
 };

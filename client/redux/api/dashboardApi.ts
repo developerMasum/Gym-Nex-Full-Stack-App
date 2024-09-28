@@ -33,9 +33,9 @@ export const dashboardApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.admin],
     }),
-    gestBestDonners: build.query({
+    userProfileCount: build.query({
       query: () => ({
-        url: "/dashboard/best-donors",
+        url: "/dashboard/count/profile",
         method: "GET",
       }),
       providesTags: [tagTypes.admin],
@@ -48,6 +48,5 @@ export const {
   useGetMonthWisePaymentUpdateQuery,
   useGetMonthWiseUserUpdateQuery,
   useGetYearlyIncomeQuery,
-
-  useGestBestDonnersQuery,
+  useUserProfileCountQuery,
 } = dashboardApi;
