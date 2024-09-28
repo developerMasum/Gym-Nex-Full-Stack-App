@@ -26,6 +26,13 @@ const paymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    getMyOfflinePaymentsHistory: build.query({
+      query: (id: string) => ({
+        url: `/payment/offline-payments/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
     updatePaymentStatus: build.mutation({
       query: (data) => ({
         url: `/payment/offline-payments/${data.id}`,
@@ -42,6 +49,7 @@ export const {
   useOfflinePaymentMutation,
   useGetOfflinePaymentsQuery,
   useUpdatePaymentStatusMutation,
+  useGetMyOfflinePaymentsHistoryQuery,
 } = paymentApi;
 
 export default paymentApi;

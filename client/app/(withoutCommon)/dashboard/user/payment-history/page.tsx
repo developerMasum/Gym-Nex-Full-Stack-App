@@ -1,82 +1,93 @@
 "use client";
-import DataTable from "@/components/Reuseable/DataTable";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCaption,
+} from "@/components/ui/table"; // Importing necessary components from ShadCN UI
 import SearchInput from "@/components/Reuseable/SearchInput";
+import { useGetMyOfflinePaymentsHistoryQuery } from "@/redux/api/paymentApi";
+import { getUserInfo } from "@/services/actions/auth.services";
 import React, { useState } from "react";
 
 interface Invoice {
   id: string;
   status: string;
-  method: string;
-  amount: string;
+  method?: string; // Optional since it might not be present
+  amount: number;
+  plan: string;
+  schedule: string;
+  transactionId: string;
+  createdAt: string; // Adding createdAt for date and time
 }
 
 const PaymentHistory = () => {
-  const invoices: Invoice[] = [
-    { id: "INV001", status: "Paid", method: "Credit Card", amount: "$250.00" },
-    { id: "INV002", status: "Pending", method: "PayPal", amount: "$150.00" },
-    {
-      id: "INV003",
-      status: "Paid",
-      method: "Bank Transfer",
-      amount: "$350.00",
-    },
-    {
-      id: "INV004",
-      status: "Failed",
-      method: "Credit Card",
-      amount: "$200.00",
-    },
-  ];
+  const { id } = getUserInfo();
+  const { data: invoices, isLoading } = useGetMyOfflinePaymentsHistoryQuery(id);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [hoveredInvoice, setHoveredInvoice] = useState<Invoice | null>(null);
 
-  const filteredInvoices = invoices.filter(
-    (invoice) =>
+  // Filter invoices based on search term
+  const filteredInvoices = invoices?.filter((invoice: Invoice) => {
+    const formattedDate = new Date(invoice.createdAt).toLocaleDateString();
+    return (
       invoice.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      formattedDate.includes(searchTerm) || // Check against formatted date
       invoice.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      invoice.method.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      invoice.amount.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const columns: {
-    header: string;
-    key: keyof Invoice;
-    align?: "left" | "center" | "right";
-  }[] = [
-    { header: "Invoice", key: "id" },
-    { header: "Status", key: "status" },
-    { header: "Method", key: "method" },
-    { header: "Amount", key: "amount", align: "right" },
-  ];
+      invoice.plan.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      invoice.schedule.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      invoice.transactionId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      invoice.amount.toString().includes(searchTerm)
+    );
+  });
 
   return (
-    <div className=" bg-transparent flex flex-col items-center justify-center">
+    <div className="bg-transparent flex flex-col items-center justify-center">
       <div className="mb-4 w-1/2 flex justify-center">
         <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
-      <DataTable<Invoice>
-        data={filteredInvoices}
-        columns={columns}
-        caption="A list of your recent invoices."
-        onRowHover={setHoveredInvoice}
-      />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead>Plan</TableHead>
+              <TableHead>Schedule</TableHead>
+              <TableHead>Transaction ID</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredInvoices.length > 0 ? (
+              filteredInvoices.map((invoice: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {new Date(invoice.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>{invoice.plan}</TableCell>
+                  <TableCell>{invoice.schedule}</TableCell>
+                  <TableCell>{invoice.transactionId}</TableCell>
+                  <TableCell className="text-right">{invoice.amount}</TableCell>
+                  <TableCell>{invoice.status}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center">
+                  No data found
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
 
-      {hoveredInvoice && (
-        <div className="absolute p-2 bg-gray-700 text-white rounded shadow-lg">
-          <p>
-            <strong>Invoice ID:</strong> {hoveredInvoice.id}
-          </p>
-          <p>
-            <strong>Status:</strong> {hoveredInvoice.status}
-          </p>
-          <p>
-            <strong>Method:</strong> {hoveredInvoice.method}
-          </p>
-          <p>
-            <strong>Amount:</strong> {hoveredInvoice.amount}
-          </p>
-        </div>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+        </Table>
       )}
     </div>
   );

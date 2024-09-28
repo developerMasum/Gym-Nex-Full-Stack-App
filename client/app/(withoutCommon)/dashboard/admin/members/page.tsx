@@ -34,7 +34,6 @@ const Members = () => {
   return (
     <div className="container mx-auto p-4">
       <Fade>
-        {" "}
         <h1 className="text-xl font-bold mb-4 text-gray-200 text-center">
           Members List
         </h1>
