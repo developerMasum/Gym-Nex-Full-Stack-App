@@ -118,6 +118,17 @@ const validateOfflinePayment = async (payload: any) => {
   });
   return result;
 };
+const getMyPaymentInfo = async (id: string) => {
+  const result = await prisma.payment.findMany({
+    where: {
+      userId: id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return result;
+};
 
 export const PaymentService = {
   initPayment,
@@ -125,4 +136,5 @@ export const PaymentService = {
   offlinePayment,
   getOfflinePayments,
   validateOfflinePayment,
+  getMyPaymentInfo,
 };

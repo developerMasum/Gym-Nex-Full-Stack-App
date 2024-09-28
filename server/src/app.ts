@@ -15,7 +15,10 @@ app.use(cookieParser());
 // origin: "http://localhost:3000",
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: [
+    "http://localhost:3000",
+    "https://gym-nex-full-stack-app.vercel.app",
+  ],
   credentials: true,
 };
 

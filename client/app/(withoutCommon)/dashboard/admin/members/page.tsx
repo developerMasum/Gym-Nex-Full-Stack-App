@@ -10,11 +10,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDeleteUserMutation, useGetAllUserQuery } from "@/redux/api/userApi";
 import { toast } from "sonner";
+import { Fade } from "react-awesome-reveal";
 
 const Members = () => {
   const [deleteUser] = useDeleteUserMutation();
   const { data: membersData, isLoading } = useGetAllUserQuery({});
-  console.log(membersData);
+  // console.log(membersData);
   // Sample member data
 
   // Handle delete action
@@ -32,7 +33,12 @@ const Members = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Members List</h1>
+      <Fade>
+        {" "}
+        <h1 className="text-xl font-bold mb-4 text-gray-200 text-center">
+          Members List
+        </h1>
+      </Fade>
       <Table>
         <TableHeader>
           <TableRow>

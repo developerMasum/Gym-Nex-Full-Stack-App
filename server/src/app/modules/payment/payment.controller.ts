@@ -53,10 +53,21 @@ const validateOfflinePayment = async (req: Request, res: Response) => {
     data: result,
   });
 };
+const getMyPaymentInfo = async (req: Request, res: Response) => {
+  const result = await PaymentService.getMyPaymentInfo(req.params.id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Offline payment verified!",
+    data: result,
+  });
+};
+
 export const PaymentController = {
   initPayment,
   validate,
   offlinePayment,
   getOfflinePayments,
   validateOfflinePayment,
+  getMyPaymentInfo,
 };
