@@ -30,10 +30,14 @@ model User {
 }
 
 model UserProfile {
-  id            String         @id @default(uuid())
-  userId        String         @unique
-  weight        Int
-  height        Int
+  id         String @id @default(uuid())
+  userId     String @unique
+  weight     Int
+  height     Int
+  location   String
+  about      String
+  occupation String
+
   photo         String
   maritalStatus MaritalStatus?
   createdAt     DateTime       @default(now())

@@ -3,6 +3,8 @@ import { userController } from "./user.controller";
 
 import { userValidation } from "./user.validation";
 import { ZodError } from "../../Interfaces/errorSource";
+import auth from "../../middleware/auth";
+import { UserRole } from "@prisma/client";
 
 const router = express.Router();
 
@@ -41,6 +43,7 @@ router.post(
     }
   }
 );
+router.get("/get-me", auth(UserRole.USER), userController.getMyself);
 router.get("/users", userController.getAllUser);
 router.delete("/users/:id", userController.deleteUser);
 router.post("/create-trainer", userController.createTrainer);

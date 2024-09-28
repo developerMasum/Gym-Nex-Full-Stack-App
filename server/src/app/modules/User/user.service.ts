@@ -145,10 +145,25 @@ const deleteUser = async (id: any) => {
   });
   return result;
 };
-const deleteTrainer = async (id: any) => {
+const deleteTrainer = async (id: string) => {
   const result = await prisma.trainers.delete({
     where: {
       id,
+    },
+  });
+  return result;
+};
+const getMyself = async (token: string) => {
+  const verifiedUser = jwtHelpers.verifyToken(
+    token,
+    config.jwt.jwt_secret as Secret
+  );
+  console.log(verifiedUser);
+  const userId = verifiedUser.id;
+  // console.log(id);
+  const result = await prisma.user.findUnique({
+    where: {
+      id: userId,
     },
   });
   return result;
@@ -162,4 +177,5 @@ export const userService = {
   getTrainers,
   getSingleTrainers,
   deleteTrainer,
+  getMyself,
 };

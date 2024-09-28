@@ -86,6 +86,17 @@ const deleteTrainer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyself = catchAsync(async (req: Request, res: Response) => {
+  const authorization: string = req.headers.authorization || "";
+  const result = await userService.getMyself(authorization);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "My own retrieved successfully!",
+    data: result,
+  });
+});
+
 export const userController = {
   createUser,
   deleteUser,
@@ -94,4 +105,5 @@ export const userController = {
   getTrainers,
   getSingleTrainers,
   deleteTrainer,
+  getMyself,
 };

@@ -72,14 +72,15 @@ export const drawerItems = (role: UserRole): ISidebarItem[] => {
           path: `${role}/my-workout`,
           icon: UserCog,
         },
-        // {
-        //   title: "Payments",
-        //   path: `${role}/payments`,
-        //   icon: UserCog,
-        // },
+
         {
           title: "Payment History",
           path: `${role}/payment-history`,
+          icon: UserCog,
+        },
+        {
+          title: "My Profile",
+          path: `${role}/my-profile`,
           icon: UserCog,
         }
       );
