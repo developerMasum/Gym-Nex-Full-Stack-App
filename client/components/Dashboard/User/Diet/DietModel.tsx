@@ -2,8 +2,13 @@ import Image from "next/image";
 import React from "react";
 
 import { dietPlansData } from "@/lib/data";
+import { useGetMyselfQuery } from "@/redux/api/userApi";
 
 const DietModel = () => {
+  const { data: user, isLoading } = useGetMyselfQuery({});
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   const today = new Date()
     .toLocaleString("en-US", { weekday: "long" })
     .toLowerCase();
@@ -11,11 +16,13 @@ const DietModel = () => {
   const todayPlan = dietPlansData.find((plan) => plan.day === today);
 
   return (
-    <main className="w-full h-full  shadow-2xl rounded-md px-3 py-4">
+    <main className="w-full h-[500px]  shadow-2xl rounded-md px-3 py-4">
       <div className="flex flex-col lg:flex-row justify-between items-center mb-6">
         <div className="lg:w-1/2">
           <div className="text-white">
-            <p className="text-xl font-bold">Hello, Kim</p>
+            <p className="text-xl font-bold">
+              Hello, <span className="text-orange-500">{user?.name}</span>
+            </p>
             <p>Your Today Diet Plan:</p>
           </div>
           <div className="mt-4">

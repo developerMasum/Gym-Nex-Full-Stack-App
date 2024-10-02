@@ -51,6 +51,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    updateMyself: build.query({
+      query: (data) => ({
+        url: "/get-me",
+        method: "PATCH",
+        data: data.body,
+      }),
+      providesTags: [tagTypes.user],
+    }),
   }),
 });
 
@@ -62,4 +70,5 @@ export const {
   useCreateUserMutation,
   useGetAllUserQuery,
   useGetMyselfQuery,
+  useUpdateMyselfQuery,
 } = userApi;

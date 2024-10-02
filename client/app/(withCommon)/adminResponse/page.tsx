@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { getUserInfo } from "@/services/actions/auth.services";
+import Link from "next/link";
 
 const AdminResponsePage = () => {
   const user = getUserInfo();
@@ -44,15 +45,11 @@ const AdminResponsePage = () => {
           <p className="text-gray-300 font-semibold">Best Regards,</p>
           <p className="text-gray-300">The Admin Team</p>
         </div>
-        <div>
-          <p className="text-gray-300">
-            If you wish to return to the main page, click{" "}
-            <a href="/" className="text-blue-400 hover:underline">
-              here
-            </a>
-            .
+        <Link href="/">
+          <p className=" cursor-pointer underline text-muted-foreground text-gay-100 font-semibold hover:bg-gradient-to-r">
+            return to the home page
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   );

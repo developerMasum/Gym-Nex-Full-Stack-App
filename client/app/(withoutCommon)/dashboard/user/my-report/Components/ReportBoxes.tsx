@@ -1,7 +1,6 @@
 import React from "react";
 import { Flame, Droplet, Moon, Footprints, Dumbbell } from "lucide-react";
 import { useUserProfileCountQuery } from "@/redux/api/dashboardApi";
-import { getUserInfo } from "@/services/actions/auth.services";
 
 const ReportStats = () => {
   const { data: dashboardData, isLoading } = useUserProfileCountQuery({});
@@ -12,7 +11,6 @@ const ReportStats = () => {
 
   return (
     <div>
-      {" "}
       <div className="grid grid-cols-5 gap-4 mb-8">
         <div className="bg-[#313844] p-6 rounded  flex flex-col items-center shadow-lg">
           <div className="bg-[#F49510] bg-opacity-50 px-2 py-2 rounded-md">
@@ -25,7 +23,7 @@ const ReportStats = () => {
             </button>
           </div>
           <div className="text-3xl font-bold text-gray-100">
-            {dashboardData?.steps}
+            {dashboardData?.steps || 0}
           </div>
           <div className="text-gray-100">Steps</div>
         </div>
@@ -41,7 +39,7 @@ const ReportStats = () => {
             </button>
           </div>
           <div className="text-3xl font-bold text-gray-100">
-            {dashboardData?.calories}
+            {dashboardData?.calories || 0}
           </div>
           <div className="text-gray-300">Calories</div>
         </div>
@@ -71,8 +69,8 @@ const ReportStats = () => {
             </button>
           </div>
           <div className="text-3xl font-bold text-gray-100">
-            {dashboardData?.sleep}{" "}
-            <span className="text-gray-300 text-base">hrs</span>
+            {dashboardData?.sleep || 0}
+            <span className="text-gray-300 text-base ml-2">hrs</span>
           </div>
           <div className="text-gray-300">Sleep</div>
         </div>
@@ -87,7 +85,7 @@ const ReportStats = () => {
             </button>
           </div>
           <div className="text-3xl text-gray-100 font-bold">
-            {dashboardData?.gym}{" "}
+            {dashboardData?.gym || 0}{" "}
             <span className="text-gray-300 text-base">hrs</span>
           </div>
           <div className="text-gray-300">Gym</div>

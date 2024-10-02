@@ -108,7 +108,7 @@ const ChangePassword = () => {
                   </FormItem>
                 )}
               />
-              <Button className="w-full bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <Button className="w-full bg-gradient-to-r from-red-500 to-amber-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Change Password
               </Button>
             </Card>

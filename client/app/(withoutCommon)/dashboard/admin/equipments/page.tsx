@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 // Sample data array
@@ -120,9 +121,11 @@ const GymItemsPage = () => {
           key={item.id}
           className="flex flex-col items-center border p-4 rounded-lg shadow bg-white"
         >
-          <img
+          <Image
             src={item.image}
             alt={item.label}
+            width={64}
+            height={64}
             className="w-24 h-24 object-contain mb-4"
           />
           <h2 className="text-4xl font-thin">{item.number}</h2>

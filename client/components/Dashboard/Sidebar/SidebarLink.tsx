@@ -20,8 +20,8 @@ const SidebarLink = ({ item }: IProps) => {
       className={cn(
         "flex items-center gap-3 rounded-lg px-1 py-2 transition-all",
         isActive
-          ? "bg-red-600 text-gray-100"
-          : "text-muted-foreground hover:text-red-600"
+          ? "bg-gradient-to-r from-red-500 to-amber-500 text-gray-100"
+          : "text-muted-foreground hover:text-red-500 hover:bg-gradient-to-r "
       )}
     >
       <item.icon className="h-4 w-4" />

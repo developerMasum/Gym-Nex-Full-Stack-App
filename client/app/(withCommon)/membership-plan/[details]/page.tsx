@@ -13,9 +13,10 @@ import {
 import { useGetSingleMemberShipPlanQuery } from "@/redux/api/membershipPlanApi";
 import { getUserInfo } from "@/services/actions/auth.services";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useOfflinePaymentMutation } from "@/redux/api/paymentApi";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const PlansDetailsPage = () => {
   const details = usePathname();
@@ -30,6 +31,7 @@ const PlansDetailsPage = () => {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [membershipPlan, setMembershipPlan] = useState(null); // State to hold membership plan
+  const router = useRouter();
 
   // Set default user info once it is available
   useEffect(() => {
@@ -62,13 +64,17 @@ const PlansDetailsPage = () => {
       userId: user?.id,
       schedule,
       transactionId,
-      plan: membershipPlan, // Use the local state
+      plan: membershipPlan,
       amount: data?.amount,
     };
 
-    // console.log(formData);
-    await offlinePayment(formData);
-    toast.success("Payment successful");
+    try {
+      await offlinePayment(formData).unwrap();
+      toast.success("Payment successful");
+      router.push("/adminResponse");
+    } catch (error) {
+      toast.error("Payment failed. Please try again.");
+    }
   };
 
   return (
@@ -86,8 +92,8 @@ const PlansDetailsPage = () => {
             </label>
             <Input
               placeholder="Name"
-              value={userName} // Controlled input
-              onChange={(e) => setUserName(e.target.value)} // Update state on change
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               className="bg-transparent"
             />
           </div>
@@ -100,8 +106,8 @@ const PlansDetailsPage = () => {
           <Input
             type="email"
             placeholder="Email"
-            value={userEmail} // Controlled input
-            onChange={(e) => setUserEmail(e.target.value)} // Update state on change
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
             className="bg-transparent"
           />
         </div>
@@ -161,7 +167,7 @@ const PlansDetailsPage = () => {
           complete your purchase.
         </p>
 
-        <Button className="w-full bg-pink-500 text-white py-2">
+        <Button className="w-full bg-gradient-to-r from-red-500 to-amber-500 text-white py-2">
           Complete Payment
         </Button>
 

@@ -37,6 +37,7 @@ model UserProfile {
   location   String?
   about      String?
   occupation String?
+  gender     Gender?
 
   photo         String?
   maritalStatus MaritalStatus?
@@ -163,6 +164,12 @@ enum Plans {
 enum UserRole {
   USER
   ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 enum MaritalStatus {

@@ -15,7 +15,7 @@ import { logoutUser } from "@/services/actions/logoutUser";
 import { useRouter } from "next/navigation";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState<UserRole | string>("");
   const [userInfo, setUserInfo] = useState<{
     name?: string;
     role?: string;
@@ -27,10 +27,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     const user = getUserInfo();
     if (user) {
       setUserRole(user.role);
-      setUserInfo(user); // Store user info in state
+      setUserInfo(user);
     }
   }, []);
-  // console.log("userInfo", userInfo);
 
   const sidebarItems = drawerItems(userRole as UserRole);
   const router = useRouter();
@@ -41,17 +40,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen w-full flex bg-[#292E38]">
-      {/* Sidebar */}
+      {/* Sidebar for larger screens */}
       <div className="hidden md:flex flex-col fixed top-0 left-0 h-screen w-[220px] lg:w-[280px] bg-[#18181B]">
         <div className="flex flex-col h-full">
           {/* Logo & Profile */}
           <div className="flex flex-col items-center gap-4 px-4 py-8 bg-transparent">
             <Image
               src={assets.trainer.trainer1}
-              alt="logo"
+              alt="Profile"
               width={50}
               height={50}
-              className="h-28 w-28 rounded-full border-2 border-red-700"
+              className="h-28 w-28 rounded-full border-4 border-red-500 hover:bg-gradient-to-r from-red-500 to-amber-500"
             />
             <div className="text-center">
               {userInfo ? (
@@ -64,14 +63,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   </p>
                   {userInfo.role === "admin" ? (
                     <p className="text-white font-semibold text-sm lg:text-base">
-                      <button className="mt-1 text-xs lg:text-sm px-2 lg:px-2 lg:py-0 text-white font-semibold bg-red-700 hover:bg-red-800 rounded-md">
+                      <button className="mt-1 text-xs lg:text-sm px-2 py-1 text-white font-semibold bg-red-700 hover:bg-red-800 rounded-md">
                         {userInfo.role || "No role"}
                       </button>
                     </p>
                   ) : (
                     <button
                       disabled
-                      className="mt-1 text-xs lg:text-sm px-2 lg:px-2 lg:py-0 text-white font-semibold bg-red-700  rounded-md "
+                      className="mt-1 text-xs lg:text-sm px-2 py-1 text-white font-semibold bg-gradient-to-r from-amber-500 to-red-600 rounded-md"
                     >
                       {userInfo.plan || "No plan"} Plan
                     </button>
@@ -94,7 +93,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </nav>
           </div>
 
-          {/* Footer - Logout Button */}
+          {/* Logout Button */}
           <div className="p-4 mt-auto">
             <Button
               onClick={handleLogOut}
@@ -107,15 +106,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Mobile Header and Sidebar */}
       <div className="flex-1 flex flex-col md:ml-[220px] lg:ml-[280px]">
-        {/* Mobile Header */}
         <Sheet>
           <SheetTrigger asChild>
             <Button
               variant="outline"
               size="icon"
-              className="shrink-0 md:hidden"
+              className="shrink-0 md:hidden "
             >
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation menu</span>

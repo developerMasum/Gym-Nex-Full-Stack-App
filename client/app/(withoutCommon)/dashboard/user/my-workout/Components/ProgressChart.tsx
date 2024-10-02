@@ -33,7 +33,7 @@ const ProgressChart: React.FC = () => {
       {
         label: "Progress",
         data: progress,
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        backgroundColor: "bg-gradient-to-r from-red-500 to-amber-500",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
         borderRadius: 5,

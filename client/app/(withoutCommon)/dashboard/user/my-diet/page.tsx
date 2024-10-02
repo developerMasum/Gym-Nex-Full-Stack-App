@@ -1,4 +1,4 @@
-import DietChart from "@/components/Dashboard/User/Diet/DietChart";
+"use client";
 import DietModel from "@/components/Dashboard/User/Diet/DietModel";
 import DietPlan from "@/components/Dashboard/User/Diet/DietPlan";
 import React from "react";

@@ -9,15 +9,6 @@ import { Secret } from "jsonwebtoken";
 import prisma from "../../../shared/prisma";
 import { userSearchAbleFields } from "./user.constants";
 
-// type CreateUserInput = {
-//   name: string;
-//   age: string;
-//   phone: string;
-//   email: string;
-//   password: string;
-//   profilePhoto?: string;
-// };
-
 const createUserIntoDB = async (userData: any) => {
   const hashedPassword: string = await bcrypt.hash(userData.password, 12);
 
@@ -32,6 +23,8 @@ const createUserIntoDB = async (userData: any) => {
           email: userData.email,
           password: hashedPassword,
           profilePhoto: userData.profilePhoto,
+          plan: userData.plan,
+          role: userData.role,
         },
       });
 
@@ -39,6 +32,14 @@ const createUserIntoDB = async (userData: any) => {
       const createdProfile = await tx.userProfile.create({
         data: {
           userId: createdUser.id,
+          location: userData.location,
+          occupation: userData.occupation,
+          about: userData.about,
+          height: userData.height,
+          weight: userData.weight,
+          photo: userData.profilePhoto,
+          maritalStatus: userData.maritalStatus,
+          gender: userData.gender,
         },
       });
 
@@ -192,6 +193,33 @@ const getMyself = async (token: string) => {
     throw new Error("User or Profile not found");
   }
 };
+const updateMyself = async (token: string, data: any) => {
+  try {
+    // Verify the token and extract the user ID
+    const verifiedUser = jwtHelpers.verifyToken(
+      token,
+      config.jwt.jwt_secret as Secret
+    );
+    console.log("Verified User:", verifiedUser);
+
+    const userId = verifiedUser.id;
+    console.log("User ID:", userId);
+
+    // Fetch the user with profile included
+    const result = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        ...data,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.error("Error fetching user or profile:", error);
+    throw new Error("User or Profile not found");
+  }
+};
 
 export const userService = {
   createUserIntoDB,
@@ -202,4 +230,5 @@ export const userService = {
   getSingleTrainers,
   deleteTrainer,
   getMyself,
+  updateMyself,
 };
