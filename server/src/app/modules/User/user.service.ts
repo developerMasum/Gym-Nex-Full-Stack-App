@@ -194,30 +194,32 @@ const getMyself = async (token: string) => {
   }
 };
 const updateMyself = async (token: string, data: any) => {
+  console.log("Data:", data);
   try {
     // Verify the token and extract the user ID
     const verifiedUser = jwtHelpers.verifyToken(
       token,
       config.jwt.jwt_secret as Secret
     );
-    console.log("Verified User:", verifiedUser);
+    // console.log("Verified User:", verifiedUser);
 
     const userId = verifiedUser.id;
-    console.log("User ID:", userId);
+    // console.log("User ID:", userId);
 
-    // Fetch the user with profile included
-    const result = await prisma.user.update({
+    // Fetch the user profile and update it
+    const result = await prisma.userProfile.update({
       where: {
-        id: userId,
+        userId: userId,
       },
       data: {
         ...data,
       },
     });
+
     return result;
-  } catch (error) {
-    console.error("Error fetching user or profile:", error);
-    throw new Error("User or Profile not found");
+  } catch (error: any) {
+    console.error("Error updating user profile:", error.message || error);
+    throw new Error("Error updating user profile");
   }
 };
 

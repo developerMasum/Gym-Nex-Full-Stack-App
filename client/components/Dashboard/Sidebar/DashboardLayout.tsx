@@ -13,6 +13,7 @@ import assets from "@/assets";
 import { Button } from "@/components/ui/button";
 import { logoutUser } from "@/services/actions/logoutUser";
 import { useRouter } from "next/navigation";
+import { useGetMyselfQuery } from "@/redux/api/userApi";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [userRole, setUserRole] = useState<UserRole | string>("");
@@ -22,6 +23,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     email?: string;
     plan?: string;
   } | null>(null);
+  const { data, isLoading } = useGetMyselfQuery({});
 
   useEffect(() => {
     const user = getUserInfo();
@@ -46,7 +48,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {/* Logo & Profile */}
           <div className="flex flex-col items-center gap-4 px-4 py-8 bg-transparent">
             <Image
-              src={assets.trainer.trainer1}
+              src={data?.profilePhoto || assets.trainer.trainer1}
               alt="Profile"
               width={50}
               height={50}

@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Common/Loading";
 import {
   Table,
   TableBody,
@@ -8,10 +9,9 @@ import {
   TableRow,
   TableCaption,
 } from "@/components/ui/table";
-import SearchInput from "@/components/Reuseable/SearchInput";
 import { useGetMyOfflinePaymentsHistoryQuery } from "@/redux/api/paymentApi";
+import { useGetMyselfQuery } from "@/redux/api/userApi";
 import { getUserInfo } from "@/services/actions/auth.services";
-import React, { useState } from "react";
 
 interface Invoice {
   id: string;
@@ -25,30 +25,19 @@ interface Invoice {
 }
 
 const PaymentHistory = () => {
-  const { id } = getUserInfo();
-  const { data: invoices, isLoading } = useGetMyOfflinePaymentsHistoryQuery(id);
+  const { data, isLoading: isFetching } = useGetMyselfQuery({});
+  // console.log(data);
+  // const id = ;
+  const { data: invoices, isLoading } = useGetMyOfflinePaymentsHistoryQuery(
+    data?.id
+  );
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  // Filter invoices based on search term
-  const filteredInvoices = invoices?.filter((invoice: Invoice) => {
-    const formattedDate = new Date(invoice.createdAt).toLocaleDateString();
-    return (
-      invoice.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      formattedDate.includes(searchTerm) || // Check against formatted date
-      invoice.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      invoice.plan.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      invoice.schedule.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      invoice.transactionId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      invoice.amount.toString().includes(searchTerm)
-    );
-  });
+  if (isFetching) {
+    return <Loading />;
+  }
 
   return (
     <div className="bg-transparent flex flex-col items-center justify-center">
-      <div className="mb-4 w-1/2 flex justify-center">
-        <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      </div>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -64,8 +53,8 @@ const PaymentHistory = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredInvoices?.length > 0 ? (
-              filteredInvoices?.map((invoice: any, index: number) => (
+            {invoices?.length > 0 ? (
+              invoices?.map((invoice: any, index: number) => (
                 <TableRow key={index}>
                   <TableCell>
                     {new Date(invoice.createdAt).toLocaleDateString()}
