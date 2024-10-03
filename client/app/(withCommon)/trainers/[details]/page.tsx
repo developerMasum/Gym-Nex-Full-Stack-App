@@ -59,14 +59,16 @@ const TrainerDetailsPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
         <div className="p-4 bg-[#313844] rounded-lg shadow-sm flex flex-col items-center">
-          <User className="text-purple-500 w-8 h-8" />
-          <p className="mt-2 text-2xl font-bold">{trainer?.traineesCount}</p>
+          <User className="text-red-500 w-8 h-8" />
+          <p className="mt-2 text-2xl text-gray-300 font-bold">
+            {trainer?.traineesCount}
+          </p>
           <p className="text-gray-100 text-sm">Trainees</p>
-          <p className="text-xs text-purple-500 mt-1">8 new this week</p>
+          <p className="text-xs text-red-500 mt-1">8 new this week</p>
         </div>
         <div className="p-4 bg-[#313844]  rounded-lg shadow-sm flex flex-col items-center">
           <DollarSign className="text-green-500 w-8 h-8" />
-          <p className="mt-2 text-2xl font-bold">
+          <p className="mt-2 text-2xl font-bold text-gray-300">
             ${trainer?.totalEarnedAmount}
           </p>
           <p className="text-gray-100 text-sm">Earnings</p>
@@ -74,7 +76,7 @@ const TrainerDetailsPage = () => {
         </div>
         <div className="p-4 bg-[#313844]  rounded-lg shadow-sm flex flex-col items-center">
           <Star className="text-yellow-500 w-8 h-8" />
-          <p className="mt-2 text-2xl font-bold">3689</p>
+          <p className="mt-2 text-2xl font-bold text-gray-300">3689</p>
           <p className="text-gray-100 text-sm">Reviews</p>
           <p className="text-xs text-yellow-500 mt-1">30 new reviews</p>
         </div>
