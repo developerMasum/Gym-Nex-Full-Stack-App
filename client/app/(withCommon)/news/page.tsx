@@ -47,7 +47,10 @@ const NewsPage = () => {
                 <h3 className="text-xl font-bold uppercase">
                   {blog.mainTitle}
                 </h3>
-                <p className="text-gray-400 mt-2">{blog.firstDescription}</p>
+                {/* Shortened firstDescription */}
+                <p className="text-gray-400 mt-2">
+                  {blog?.firstDescription?.slice(0, 180)}...
+                </p>
               </div>
 
               {/* Button Section */}

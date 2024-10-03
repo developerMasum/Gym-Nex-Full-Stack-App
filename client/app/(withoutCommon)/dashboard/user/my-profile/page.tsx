@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useGetMyselfQuery, useUpdateMyselfQuery } from "@/redux/api/userApi";
 import Image from "next/image";
+import Loading from "@/components/Common/Loading";
 
 const Profile = () => {
   const { data, isLoading } = useGetMyselfQuery({});
@@ -29,7 +30,7 @@ const Profile = () => {
 
   // Handle loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   // Destructure user and userProfile data

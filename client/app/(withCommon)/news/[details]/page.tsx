@@ -27,26 +27,27 @@ const BlogDetail: FC = () => {
 
       {/* Author Info */}
       <div className="flex justify-center space-x-4 text-gray-500 mb-6">
-        <div className="flex items-center space-x-2">
-          <Image
-            src={blogData.authorImg}
-            alt={`${blogData.authorName}'s Avatar`}
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
-          <span>{blogData.authorName}</span>
-        </div>
-        <span>•</span>
-        <div className="flex items-center">
-          <span>{blogData.time}</span>
-        </div>
-        <span>•</span>
-        <div className="flex items-center">
-          <span>{blogData.createdAt}</span>
+        <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-5">
+            <Image
+              src={blogData.authorImg}
+              alt={`${blogData.authorName}'s Avatar`}
+              width={40}
+              height={40}
+              className="rounded-full w-18 h-18"
+            />
+            <span>{blogData.authorName}</span>
+          </div>
+          <span>•</span>
+          <div className="flex items-center">
+            <span>{blogData.time}</span>
+          </div>
+          <span>•</span>
+          <div className="flex items-center">
+            <span>{blogData.createdAt}</span>
+          </div>
         </div>
       </div>
-
       {/* Image Section */}
       <div className="w-full h-[400px] relative mb-8">
         <Image

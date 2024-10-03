@@ -3,11 +3,12 @@ import React from "react";
 
 import { dietPlansData } from "@/lib/data";
 import { useGetMyselfQuery } from "@/redux/api/userApi";
+import Loading from "@/components/Common/Loading";
 
 const DietModel = () => {
   const { data: user, isLoading } = useGetMyselfQuery({});
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
   const today = new Date()
     .toLocaleString("en-US", { weekday: "long" })

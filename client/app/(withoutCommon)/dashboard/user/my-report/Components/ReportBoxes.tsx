@@ -1,12 +1,13 @@
 import React from "react";
 import { Flame, Droplet, Moon, Footprints, Dumbbell } from "lucide-react";
 import { useUserProfileCountQuery } from "@/redux/api/dashboardApi";
+import Loading from "@/components/Common/Loading";
 
 const ReportStats = () => {
   const { data: dashboardData, isLoading } = useUserProfileCountQuery({});
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

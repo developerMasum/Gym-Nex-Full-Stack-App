@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { useGetMonthWiseUserUpdateQuery } from "@/redux/api/dashboardApi";
+import Loading from "@/components/Common/Loading";
 
 // Register the components
 ChartJS.register(
@@ -28,9 +29,8 @@ const LineChart = () => {
   const { data: userData, isLoading } = useGetMonthWiseUserUpdateQuery({});
 
   if (isLoading) {
-    return <p className="text-white">Loading...</p>;
+    return <Loading />;
   }
-
   // Mapping the userData to chart data
   const labels = userData.map((monthData: any) => monthData.name); // Extract month names for labels
   const totals = userData.map((monthData: any) => monthData.total); // Extract totals for data

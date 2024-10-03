@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/Common/Loading";
 import { useGetDashboardDataQuery } from "@/redux/api/dashboardApi";
 import {
   Users,
@@ -13,7 +14,7 @@ const BoxesReport = () => {
   const { data: dashboardCount, isLoading } = useGetDashboardDataQuery({});
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

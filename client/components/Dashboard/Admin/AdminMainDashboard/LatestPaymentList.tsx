@@ -1,3 +1,4 @@
+import Loading from "@/components/Common/Loading";
 import {
   Table,
   TableBody,
@@ -12,7 +13,7 @@ const LatestPaymentList = () => {
   const { data: paymentData, isLoading } = useGetOfflinePaymentsQuery({});
   console.log(paymentData);
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   // Function to format date and time
