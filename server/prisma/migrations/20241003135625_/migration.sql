@@ -8,6 +8,9 @@ CREATE TYPE "Plans" AS ENUM ('FREE', 'BASIC', 'PREMIUM', 'ENTERPRISE');
 CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
 
 -- CreateEnum
+CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
+
+-- CreateEnum
 CREATE TYPE "MaritalStatus" AS ENUM ('MARRIED', 'UNMARRIED');
 
 -- CreateEnum
@@ -35,8 +38,13 @@ CREATE TABLE "users" (
 CREATE TABLE "user_profiles" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "weight" INTEGER NOT NULL,
-    "height" INTEGER NOT NULL,
+    "weight" INTEGER,
+    "height" INTEGER,
+    "location" TEXT,
+    "about" TEXT,
+    "occupation" TEXT,
+    "gender" "Gender",
+    "photo" TEXT,
     "maritalStatus" "MaritalStatus",
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -101,6 +109,8 @@ CREATE TABLE "user_dashboard_count" (
     "progress" INTEGER NOT NULL,
     "sleep" INTEGER NOT NULL,
     "gym" INTEGER NOT NULL,
+    "running" INTEGER NOT NULL,
+    "workout" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,

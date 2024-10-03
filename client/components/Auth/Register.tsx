@@ -20,10 +20,10 @@ const Register = () => {
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    console.log("data", data); // Logging data to console
+    // console.log("data", data); // Logging data to console
     try {
       const res = await createUser(data).unwrap();
-      if (res?.data?.id) {
+      if (res?.data) {
         toast.success("Account created successfully");
         await logoutUser(router);
         router.push("/login");
@@ -112,32 +112,6 @@ const Register = () => {
               {errors.phone && (
                 <span className="text-red-500 text-sm">
                   {String(errors.phone.message)}
-                </span>
-              )}
-            </div>
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="gender"
-                className="uppercase text-sm text-zinc-200 font-bold"
-              >
-                Gender
-              </label>
-              <select
-                {...register("gender", { required: "Gender is required" })}
-                className={`w-full h-10 pl-4 pr-8 text-zinc-400 outline-none transition-all duration-200 focus:border-amber-500 border ${
-                  errors.gender ? "border-red-500" : "border-zinc-400"
-                } bg-gray-800`}
-              >
-                <option value="" disabled>
-                  Select your gender
-                </option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-              {errors.gender && (
-                <span className="text-red-500 text-sm">
-                  {String(errors.gender.message)}
                 </span>
               )}
             </div>

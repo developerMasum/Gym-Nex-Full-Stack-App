@@ -22,14 +22,13 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     // console.log("data", data); // Logging data to console
+
     try {
       const res = await userLogin(data);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
         if (getUserInfo()?.role === "admin") {
-          // console.log("info", getUserInfo());
-
           router.push("/dashboard/admin");
         } else if (getUserInfo()?.plan === "FREE") {
           router.push("/membership-plan");
@@ -38,7 +37,7 @@ const Login = () => {
         router.push("/dashboard/user/my-report");
       }
     } catch (err: any) {
-      toast(err?.message);
+      toast.error("Account does not exist,Please register first!!");
     }
   };
 
