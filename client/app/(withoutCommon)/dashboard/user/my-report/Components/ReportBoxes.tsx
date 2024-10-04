@@ -5,6 +5,7 @@ import Loading from "@/components/Common/Loading";
 
 const ReportStats = () => {
   const { data: dashboardData, isLoading } = useUserProfileCountQuery({});
+  console.log(dashboardData);
 
   if (isLoading) {
     return <Loading />;
@@ -55,7 +56,7 @@ const ReportStats = () => {
             </button>
           </div>
           <div className="text-3xl font-bold text-gray-100">
-            {dashboardData?.progress}
+            {dashboardData?.water || 0}
           </div>
           <div className="text-gray-300 ">Progress</div>
         </div>

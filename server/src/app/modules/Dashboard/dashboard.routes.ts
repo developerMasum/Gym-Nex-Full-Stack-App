@@ -10,7 +10,7 @@ router.get("/user-count", DashboardController.getMonthWiseUserUpdate);
 router.get("/yearly-income", DashboardController.getYearlyIncome);
 router.post(
   "/count/profile",
-  auth(UserRole.USER),
+  // auth(UserRole.USER),
   DashboardController.createUserProfileCounts
 );
 router.get(

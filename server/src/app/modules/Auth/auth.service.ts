@@ -45,6 +45,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
       email: payload.email,
     },
   });
+  console.log(userData);
 
   const isCorrectPassword: boolean = await bcrypt.compare(
     payload.password,
@@ -59,7 +60,6 @@ const loginUser = async (payload: { email: string; password: string }) => {
       id: userData.id,
       name: userData.name,
       email: userData.email,
-
       role: userData.role,
       plan: userData.plan,
     },
@@ -81,9 +81,10 @@ const loginUser = async (payload: { email: string; password: string }) => {
 
   return {
     refreshToken,
-    id: userData.id,
-    name: userData.name,
-    email: userData.email,
+    id: userData?.id,
+    name: userData?.name,
+    email: userData?.email,
+    role: userData?.role,
     plan: userData.plan,
     accessToken,
   };

@@ -1,7 +1,19 @@
 import { USER_ROLE } from "@/constants/role";
 import { ISidebarItem, UserRole } from "@/types";
 
-import { UserCog, Home, Users, FileKey } from "lucide-react";
+import {
+  UserCog,
+  ClipboardPlus,
+  BookOpenCheck,
+  Home,
+  FileKey,
+  NotebookPen,
+  Dumbbell,
+  BadgeDollarSign,
+  UserRoundPen,
+  UsersRound,
+} from "lucide-react";
+import { GiTeacher, GiGymBag } from "react-icons/gi";
 
 export const drawerItems = (role: UserRole): ISidebarItem[] => {
   // console.log(role);
@@ -25,27 +37,27 @@ export const drawerItems = (role: UserRole): ISidebarItem[] => {
         {
           title: "Members",
           path: `${role}/members`,
-          icon: Users,
+          icon: UsersRound,
         },
         {
           title: "Trainers",
           path: `${role}/trainers`,
-          icon: Users,
+          icon: GiTeacher,
         },
         {
           title: "Payments",
           path: `${role}/payments`,
-          icon: Users,
+          icon: BadgeDollarSign,
         },
         {
           title: "Salaries",
           path: `${role}/salaries`,
-          icon: Users,
+          icon: BadgeDollarSign,
         },
         {
           title: "Equipments",
           path: `${role}/equipments`,
-          icon: UserCog,
+          icon: GiGymBag,
         }
       );
       break;
@@ -55,33 +67,33 @@ export const drawerItems = (role: UserRole): ISidebarItem[] => {
         {
           title: "My Report",
           path: `${role}/my-report`,
-          icon: UserCog,
+          icon: ClipboardPlus,
         },
         {
           title: "My Classes",
           path: `${role}/my-classes`,
-          icon: UserCog,
+          icon: BookOpenCheck,
         },
         {
           title: "My Diet Plan",
           path: `${role}/my-diet`,
-          icon: UserCog,
+          icon: NotebookPen,
         },
         {
           title: "My Workout",
           path: `${role}/my-workout`,
-          icon: UserCog,
+          icon: Dumbbell,
         },
 
         {
           title: "Payment History",
           path: `${role}/payment-history`,
-          icon: UserCog,
+          icon: BadgeDollarSign,
         },
         {
           title: "My Profile",
           path: `${role}/my-profile`,
-          icon: UserCog,
+          icon: UserRoundPen,
         }
       );
       break;

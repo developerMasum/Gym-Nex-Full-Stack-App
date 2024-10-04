@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { userLogin } from "@/services/actions/userLogin";
+import { signInUser } from "@/services/actions/userLogin";
 import { getUserInfo, storeUserInfo } from "@/services/actions/auth.services";
 
 const Login = () => {
@@ -24,18 +24,12 @@ const Login = () => {
     // console.log("data", data); // Logging data to console
 
     try {
-      const res = await userLogin(data);
+      const res = await signInUser(data);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
-        if (getUserInfo()?.role === "admin") {
-          router.push("/dashboard/admin");
-        } else if (getUserInfo()?.plan === "FREE") {
-          router.push("/membership-plan");
-        }
-      } else {
-        router.push("/dashboard/user/my-report");
       }
+      router.refresh();
     } catch (err: any) {
       toast.error("Account does not exist,Please register first!!");
     }
