@@ -68,6 +68,13 @@ Ensure that you have the following installed on your machine:
 - **Node.js** (v14.x or later)
 - **PostgreSQL** database
 
-### Steps to Set Up the Project
+├── components      # Reusable React components
+├── pages           # Next.js pages
+├── prisma          # Prisma ORM schema and migrations
+├── public          # Static assets (images, icons)
+├── services        # Backend services (authentication, email notifications)
+├── styles          # Global CSS styles
+└── utils           # Utility functions (helpers, API calls)
+
 
 
