@@ -3,6 +3,7 @@ import ContactImg from "../../assets/gym/4.jpeg";
 import { Images } from "../Common/Image";
 import { Text } from "../Common/Text";
 import { Button } from "../Common/Button";
+import Link from "next/link";
 
 const Contact = () => {
   return (
@@ -32,12 +33,14 @@ const Contact = () => {
         >
           {ContactTexts.paragraph}
         </Text>
-        <Button
-          className="px-10 font-medium text-white py-2.5 bg-gradient-to-r whitespace-nowrap from-red-500 to-amber-500"
-          type="button"
-        >
-          {ContactTexts.button}
-        </Button>
+        <Link href="/contact">
+          <Button
+            className="px-10 font-medium text-white py-2.5 bg-gradient-to-r whitespace-nowrap from-red-500 to-amber-500"
+            type="button"
+          >
+            {ContactTexts.button}
+          </Button>
+        </Link>
       </div>
     </section>
   );

@@ -44,7 +44,7 @@ const Blogs = () => {
               className="flex flex-col justify-between bg-zinc-950 border-b-4 border-red-500"
             >
               <Images
-                alt={blog.title}
+                alt={blog.mainTitle}
                 className="w-full h-48"
                 objectCover="object-cover"
                 width={500}

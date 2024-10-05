@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 import {
@@ -16,9 +16,29 @@ import { Button } from "../Common/Button";
 import StickyIcons from "../Common/SkickyIcon";
 import { Images } from "../Common/Image";
 import Link from "next/link";
+import Modal from "react-modal";
+
+// Custom Styles for Modal
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    background: "#000",
+    border: "none",
+    padding: 0,
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+  },
+};
 
 const HeroSection: React.FC = () => {
   const sliderRef = useRef<Slider | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const next = () => {
     if (sliderRef.current) {
@@ -30,6 +50,14 @@ const HeroSection: React.FC = () => {
     if (sliderRef.current) {
       sliderRef.current.slickPrev();
     }
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   const settings = {
@@ -102,8 +130,8 @@ const HeroSection: React.FC = () => {
                   </Link>
                 </Slide>
                 <Slide direction="up">
-                  <a
-                    href="/"
+                  <button
+                    onClick={openModal}
                     className="flex items-center gap-2 text-red-500 hover:text-amber-500 group"
                   >
                     <YoutubeLogo size={20} color="currentColor" weight="fill" />
@@ -113,7 +141,7 @@ const HeroSection: React.FC = () => {
                     >
                       Watch reviews
                     </Text>
-                  </a>
+                  </button>
                 </Slide>
               </div>
             </div>
@@ -138,6 +166,35 @@ const HeroSection: React.FC = () => {
       </div>
 
       <StickyIcons />
+
+      {/* Modal for YouTube Video */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Watch Reviews"
+        ariaHideApp={false}
+      >
+        <div className="relative w-full h-full">
+          <button
+            onClick={closeModal}
+            className="absolute top-2 right-2 text-white text-2xl"
+          >
+            &times;
+          </button>
+          <div className="w-[700px] h-96 md:h-[500px]">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </Modal>
     </section>
   );
 };
