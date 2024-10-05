@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { logoutUser } from "@/services/actions/logoutUser";
 import { useRouter } from "next/navigation";
 import { useGetMyselfQuery } from "@/redux/api/userApi";
+import Loading from "@/components/Common/Loading";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [userRole, setUserRole] = useState<UserRole | string>("");
@@ -35,6 +36,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const sidebarItems = drawerItems(userRole as UserRole);
   const router = useRouter();
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const handleLogOut = () => {
     logoutUser(router);

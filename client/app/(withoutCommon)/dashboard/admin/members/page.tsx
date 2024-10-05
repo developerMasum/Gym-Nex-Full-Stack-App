@@ -11,13 +11,16 @@ import { Button } from "@/components/ui/button";
 import { useDeleteUserMutation, useGetAllUserQuery } from "@/redux/api/userApi";
 import { toast } from "sonner";
 import { Fade } from "react-awesome-reveal";
+import Loading from "@/components/Common/Loading";
 
 const Members = () => {
   const [deleteUser] = useDeleteUserMutation();
   const { data: membersData, isLoading } = useGetAllUserQuery({});
   // console.log(membersData);
   // Sample member data
-
+  if (isLoading) {
+    return <Loading />;
+  }
   // Handle delete action
   const handleDelete = async (id: string) => {
     console.log(`Deleting member with id: ${id}`);

@@ -1,29 +1,17 @@
-import Image1 from "../../assets/gym/6.jpeg";
-import Image2 from "../../assets/gym/11.jpeg";
-import Image3 from "../../assets/gym/12.jpeg";
-import { useCallback } from "react";
-
+"use client";
 import { ChatsCircle, Clock } from "@phosphor-icons/react";
 import { Text } from "../Common/Text";
-import { BlogTexts } from "@/lib/data";
 import { Card } from "../Common/Card";
 import { Images } from "../Common/Image";
 import Link from "next/link";
+import { useGetAllBlogsQuery } from "@/redux/api/blogApi";
+import Loading from "../Common/Loading";
 
 const Blogs = () => {
-  const renderImage = useCallback((element: number) => {
-    switch (element) {
-      case 0:
-        return Image1;
-      case 1:
-        return Image2;
-      case 2:
-        return Image3;
-      default:
-        return "";
-    }
-  }, []);
-
+  const { data: BlogTexts, isLoading } = useGetAllBlogsQuery({});
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <section className="w-full h-auto flex items-center bg-zinc-900">
       <main className="w-full lg:h-[900px] md:h-[800px] flex flex-col justify-center items-center gap-20 lg:gap-28 py-12 md:py-0">
@@ -32,13 +20,13 @@ const Blogs = () => {
             as="p"
             className="text-amber-500 lg:text-sm text-xs tracking-widest uppercase font-medium"
           >
-            {BlogTexts.firstText}
+            Get informed
           </Text>
           <Text
             as="h1"
             className="text-zinc-100 lg:text-5xl md:text-4xl text-3xl"
           >
-            {BlogTexts.secondText}
+            Our Latest News
           </Text>
           <Text
             as="h1"
@@ -50,35 +38,38 @@ const Blogs = () => {
 
         {/* Blog News */}
         <div className="w-full lg:w-3/4 grid md:grid-cols-3 lg:gap-8 md:gap-5 gap-8 px-6 md:px-4 lg:px-0">
-          {BlogTexts.blogNews.map((blog, index) => (
+          {BlogTexts?.map((blog: any) => (
             <Card
-              key={index}
+              key={blog.id}
               className="flex flex-col justify-between bg-zinc-950 border-b-4 border-red-500"
             >
               <Images
                 alt={blog.title}
                 className="w-full h-48"
                 objectCover="object-cover"
-                image={renderImage(index)}
+                width={500}
+                height={500}
+                image={blog?.blogImg}
+                // image={renderImage(index)}
               />
               <Link
-                href="/"
+                href={`/news/${blog?.id}`}
                 className="flex flex-col lg:p-6 md:p-4 p-6 gap-2 group"
               >
                 <Text
                   as="h3"
                   className="text-amber-500 text-xs group-hover:underline font-semibold uppercase"
                 >
-                  {blog.caption}
+                  {blog?.mainTitle}
                 </Text>
                 <Text
                   as="h1"
                   className="text-zinc-300 group-hover:underline text-base capitalize"
                 >
-                  {blog.title}
+                  {blog?.secondTitle}
                 </Text>
                 <Text as="p" className="text-zinc-400 text-sm">
-                  {blog.paragraph.slice(0, 155) + "..."}
+                  {blog?.firstDescription?.slice(0, 155) + "..."}
                 </Text>
               </Link>
               <div className="flex justify-between lg:px-6 md:px-4 px-6 pb-6 items-center">
@@ -88,10 +79,10 @@ const Blogs = () => {
                     className="text-zinc-400 text-xs flex items-center gap-1 border-r border-zinc-400 pr-2"
                   >
                     <Clock size={15} color="currentColor" />
-                    {blog.time}
+                    {blog?.time}
                   </Text>
                   <Text as="span" className="text-zinc-300 capitalize text-xs">
-                    {blog.author}
+                    {blog?.authorName}
                   </Text>
                 </aside>
                 <Text
@@ -99,7 +90,7 @@ const Blogs = () => {
                   className="text-zinc-400 text-xs flex items-center gap-0.5"
                 >
                   <ChatsCircle size={15} color="currentColor" />
-                  {blog.comments}
+                  {blog?.comments || 50}
                 </Text>
               </div>
             </Card>

@@ -39,7 +39,7 @@ const PaymentHistory = () => {
   return (
     <div className="bg-transparent flex flex-col items-center justify-center">
       {isLoading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <Table>
           <TableHeader>

@@ -29,9 +29,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import Loading from "@/components/Common/Loading";
 
 const PaymentHistory = () => {
   const { data: membersData, isLoading } = useGetOfflinePaymentsQuery({});
+
   // console.log(membersData);
   const [updatePaymentStatus] = useUpdatePaymentStatusMutation();
 
@@ -43,6 +45,9 @@ const PaymentHistory = () => {
     setSelectedMember(member);
     setIsModalOpen(true);
   };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const handleStatusChange = (value: string) => {
     setStatus(value);
