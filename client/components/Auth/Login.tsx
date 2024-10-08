@@ -9,7 +9,7 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signInUser } from "@/services/actions/userLogin";
-import { getUserInfo, storeUserInfo } from "@/services/actions/auth.services";
+import { storeUserInfo } from "@/services/actions/auth.services";
 
 const Login = () => {
   const {
