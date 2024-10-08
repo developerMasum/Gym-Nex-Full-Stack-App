@@ -43,7 +43,11 @@ router.post(
     }
   }
 );
-router.get("/get-me", userController.getMyself);
+router.get(
+  "/get-me",
+  auth(UserRole.USER, UserRole.ADMIN),
+  userController.getMyself
+);
 router.patch("/get-me", userController.updateMyself);
 router.get("/users", userController.getAllUser);
 router.delete("/users/:id", userController.deleteUser);
