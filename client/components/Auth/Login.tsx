@@ -99,6 +99,25 @@ const Login = () => {
               </Button>
             </div>
           </form>
+          <div className="mt-4 p-4 bg-gray-700 rounded-lg text-sm text-zinc-300">
+            <p className="mb-2 font-bold text-amber-400">Demo Credentials:</p>
+            <ul className="list-disc pl-5">
+              <li>
+                <span className="font-medium">Admin:</span> <br />
+                <span>Email:</span>{" "}
+                <span className="text-amber-300">admin@gmail.com</span> <br />
+                <span>Password:</span>{" "}
+                <span className="text-amber-300">123456</span>
+              </li>
+              <li className="mt-2">
+                <span className="font-medium">User:</span> <br />
+                <span>Email:</span>{" "}
+                <span className="text-amber-300">user@gmail.com</span> <br />
+                <span>Password:</span>{" "}
+                <span className="text-amber-300">123456</span>
+              </li>
+            </ul>
+          </div>
 
           {/* Link to Register */}
           <div className="mt-4 text-center">
