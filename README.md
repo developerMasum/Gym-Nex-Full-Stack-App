@@ -3,7 +3,7 @@
 **Gym Nex** is a modern, dynamic, and fully responsive gym website designed to provide users with an immersive fitness experience. From booking classes and tracking progress to receiving real-time notifications, **Gym Nex** delivers a comprehensive solution for fitness enthusiasts and gym-goers alike. With its user-friendly interface and robust features, **Gym Nex** empowers users to achieve their fitness goals while staying engaged with the gym community.
 
 ## 🚀 **Live Demo**  
-[Check out the live website](#) (Add link here)
+[Check out the live website](#https://gym-nex-full-stack-app.vercel.app/)
 
 ## 📂 **Technologies Used**
 - **Frontend:** Next.js, Redux, ShadCN UI
