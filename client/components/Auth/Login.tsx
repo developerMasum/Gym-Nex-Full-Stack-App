@@ -1,4 +1,5 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/Common/Button";
 import { Images } from "@/components/Common/Image";
@@ -15,29 +16,41 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const router = useRouter();
 
   const onSubmit = async (data: any) => {
-    // console.log("data", data); // Logging data to console
-
     try {
       const res = await signInUser(data);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
+        router.refresh();
       }
-      router.refresh();
     } catch (err: any) {
-      toast.error("Account does not exist,Please register first!!");
+      toast.error("Account does not exist, please register first!!");
     }
+  };
+
+  // Function to autofill demo credentials
+  const fillDemoCredentials = (type: "admin" | "user") => {
+    if (type === "admin") {
+      setValue("email", "admin@gmail.com");
+      setValue("password", "123456");
+    } else {
+      setValue("email", "user@gmail.com");
+      setValue("password", "123456");
+    }
+    handleSubmit(onSubmit)(); // Auto-submit the form after filling credentials
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900 px-4">
       <div className="flex flex-col md:flex-row w-full max-w-7xl rounded-lg overflow-hidden shadow-lg">
+        {/* Form Section */}
         <div className="w-full md:w-1/2 p-8 md:p-10 bg-gray-800 flex flex-col justify-center gap-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Email or Phone Number Input */}
@@ -99,24 +112,21 @@ const Login = () => {
               </Button>
             </div>
           </form>
-          <div className="mt-4 p-4 bg-gray-700 rounded-lg text-sm text-zinc-300">
-            <p className="mb-2 font-bold text-amber-400">Demo Credentials:</p>
-            <ul className="list-disc pl-5">
-              <li>
-                <span className="font-medium">Admin:</span> <br />
-                <span>Email:</span>{" "}
-                <span className="text-amber-300">admin@gmail.com</span> <br />
-                <span>Password:</span>{" "}
-                <span className="text-amber-300">123456</span>
-              </li>
-              <li className="mt-2">
-                <span className="font-medium">User:</span> <br />
-                <span>Email:</span>{" "}
-                <span className="text-amber-300">user@gmail.com</span> <br />
-                <span>Password:</span>{" "}
-                <span className="text-amber-300">123456</span>
-              </li>
-            </ul>
+
+          {/* Demo Buttons */}
+          <div className="mt-6 flex justify-around gap-4">
+            <Button
+              onClick={() => fillDemoCredentials("admin")}
+              className="px-6 py-2 bg-gradient-to-r from-red-500 to-amber-500 text-zinc-200 text-sm uppercase font-semibold"
+            >
+              Login as Admin
+            </Button>
+            <Button
+              onClick={() => fillDemoCredentials("user")}
+              className="px-6 py-2 bg-gradient-to-r from-amber-500 to-red-500 text-zinc-200 text-sm uppercase font-semibold"
+            >
+              Login as User
+            </Button>
           </div>
 
           {/* Link to Register */}
@@ -129,11 +139,13 @@ const Login = () => {
             </span>
           </div>
         </div>
+
+        {/* Image Section */}
         <div className="w-full md:w-1/2 h-auto hidden md:block">
           <Slide direction="right" className="h-full">
             <Images
               image={image1}
-              alt="image1"
+              alt="Login Illustration"
               className="object-cover h-full w-full"
             />
           </Slide>
