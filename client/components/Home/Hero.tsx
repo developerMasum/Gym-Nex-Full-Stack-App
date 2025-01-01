@@ -127,7 +127,7 @@ const HeroSection: React.FC = () => {
                         type="button"
                         className="px-10 font-medium text-white py-2.5 bg-gradient-to-r whitespace-nowrap from-red-500 to-amber-500"
                       >
-                        go to dashboard
+                        GO TO DASHBOARD
                       </Button>
                     </Link>
                   ) : (
