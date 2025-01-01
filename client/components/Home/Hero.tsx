@@ -17,7 +17,8 @@ import StickyIcons from "../Common/SkickyIcon";
 import { Images } from "../Common/Image";
 import Link from "next/link";
 import Modal from "react-modal";
-
+import { getUserInfo } from "@/services/actions/auth.services";
+const user = getUserInfo();
 // Custom Styles for Modal
 const customStyles = {
   content: {
@@ -120,14 +121,33 @@ const HeroSection: React.FC = () => {
               </Text>
               <div className="flex items-center gap-8">
                 <Slide direction="up">
-                  <Link href={"/register"}>
+                  {user ? (
+                    <Link href={`/dashboard/${user.role}`}>
+                      <Button
+                        type="button"
+                        className="px-10 font-medium text-white py-2.5 bg-gradient-to-r whitespace-nowrap from-red-500 to-amber-500"
+                      >
+                        go to dashboard
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href={`/login`}>
+                      <Button
+                        type="button"
+                        className="px-10 font-medium text-white py-2.5 bg-gradient-to-r whitespace-nowrap from-red-500 to-amber-500"
+                      >
+                        {hero.Button}
+                      </Button>
+                    </Link>
+                  )}
+                  {/* <Link href={"/register"}>
                     <Button
                       type="button"
                       className="px-10 font-medium text-white py-2.5 bg-gradient-to-r whitespace-nowrap from-red-500 to-amber-500"
                     >
                       {hero.Button}
                     </Button>
-                  </Link>
+                  </Link> */}
                 </Slide>
                 <Slide direction="up">
                   <button
